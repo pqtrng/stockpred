@@ -20,21 +20,21 @@ PRUNE_OPTS = -f
 BUILDKIT = 1
 
 JUPYTER_BASE_IMAGE := ${JUPYTER_SCIPY_IMAGE}
-JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION} 
-JUPYTER_ENABLE_LAB := 
-JUPYTER_TARGET := 
+JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION}
+JUPYTER_ENABLE_LAB :=
+JUPYTER_TARGET :=
 JUPYTER_CHOWN_EXTRA := "/${DATA_DIR}"
 JUPYTER_UID := $(shell id -u)
-JUPYTER_USERNAME := $(shell id -u -n) 
+JUPYTER_USERNAME := $(shell id -u -n)
 
 MLFLOW_VERSION :=
-MLFLOW_VERSION := 
+MLFLOW_VERSION :=
 
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
-POSTGRES_STORE
+POSTGRES_STORE :=
 
-BUILD_OPTS = 
+BUILD_OPTS =
 
 install-pre-commit:
 	pip3 install pre-commit
@@ -42,6 +42,10 @@ install-pre-commit:
 setup-git: install-pre-commit
 	pre-commit install
 	git config branch.autosetuprebase always
+
+lint: install-pre-commit
+	@echo "Linting Python files"
+	pre-commit run -a
 
 down:
 	docker-compose down ${DOWN_OPTS}
