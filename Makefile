@@ -1,11 +1,14 @@
 SHELL := /bin/bash
 .DEFAULT_GOAL := default
 .PHONY:\
+	setup-git install-pre-commit \
+	lint \
 	help default \
 	clean \
 	build \
-	down up \
+	down up prune \
 
+HELP_PADDING = 28
 bold := $(shell tput bold)
 sgr0 := $(shell tput sgr0)
 padded_str := %-$(HELP_PADDING)s
@@ -17,24 +20,19 @@ export
 DOWN_OPTS = --remove-orphans
 UP_OPTS =
 PRUNE_OPTS = -f
+
 BUILDKIT = 1
+BUILD_OPTS =
 
 JUPYTER_BASE_IMAGE := ${JUPYTER_SCIPY_IMAGE}
 JUPYTER_BASE_VERSION := ${JUPYTER_SCIPY_VERSION}
-JUPYTER_ENABLE_LAB :=
-JUPYTER_TARGET :=
+
 JUPYTER_CHOWN_EXTRA := "/${DATA_DIR}"
 JUPYTER_UID := $(shell id -u)
 JUPYTER_USERNAME := $(shell id -u -n)
 
-MLFLOW_VERSION :=
-MLFLOW_VERSION :=
-
 POSTGRES_UID := $(shell id -u)
 POSTGRES_GID := $(shell id -g)
-POSTGRES_STORE :=
-
-BUILD_OPTS =
 
 install-pre-commit:
 	pip3 install pre-commit
